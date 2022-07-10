@@ -25,55 +25,10 @@ mod tests {
 }
 
 #[allow(dead_code)]
-// mod sms_info {  // consider renaming
-mod sms_charset_detector {
-    /// GSM (to be exact gsm03.38) encoding is descibed here // TODO LINK TO WIKI
+mod sms_info {
     enum SmsEncoding {
         GSM,
         UCS,
-    }
-
-    pub struct SmsInfo {
-        text: String, 
-        encoding: SmsEncoding,
-        parts_data: SmsPartsData,
-    }
-
-    impl SmsInfo {
-        pub fn is_gsm(&self) -> bool {
-            matches!(self.encoding, SmsEncoding::GSM)
-        }
-    }
-
-    const REG_EXP: &str = "";
-
-    pub fn sms_info_from_text(text: String) -> SmsInfo {
-        let encoding: SmsEncoding;
-        let parts_data: SmsPartsData;
-        
-        // TODO
-        // if text.match(REG_EXP)) {
-        if is_one() {
-            encoding = SmsEncoding::UCS;
-            parts_data = new_parts_data_for_ucs();
-        } else {
-            encoding = SmsEncoding::GSM;
-            parts_data = new_parts_data_for_gsm()
-        }
-
-        let mut sms_info = SmsInfo {
-            text,
-            encoding: encoding,
-            parts_data: parts_data,
-        };
-
-        sms_info.count_parts();
-
-        sms_info
-    }
-
-    fn is_one() -> bool {
-        true
     }
 
     /// Default values for counting parts of GSM encoded message
@@ -84,22 +39,22 @@ mod sms_charset_detector {
     const SYMBOLS_PER_PART_UCS: u8 = 67;
     const MAX_LENGTH_UCS: u8 = 70;
 
-    struct SmsPartsData {
+    struct SmsPartsInfo {
         parts_count: u8,
         symbols_per_part: u8,
         max_length: u8,
     }
 
-    fn new_parts_data_for_gsm() -> SmsPartsData {
-        SmsPartsData{
+    fn new_gsm_parts_info() -> SmsPartsInfo {
+        SmsPartsInfo {
             parts_count: 0,
             symbols_per_part: SYMBOLS_PER_PART_GSM,
             max_length: MAX_LENGTH_GSM,
         }
     }
 
-    fn new_parts_data_for_ucs() -> SmsPartsData {
-        SmsPartsData{
+    fn new_ucs_parts_info() -> SmsPartsInfo {
+        SmsPartsInfo {
             parts_count: 0,
             symbols_per_part: SYMBOLS_PER_PART_UCS,
             max_length: MAX_LENGTH_UCS,
